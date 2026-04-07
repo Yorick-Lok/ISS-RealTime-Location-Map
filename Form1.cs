@@ -28,8 +28,8 @@ namespace ISS_RealTime_Location_Map
         private async void Form1_Load(object sender, EventArgs e)
         {
             await webView.EnsureCoreWebView2Async(null);
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "map.html");
-            webView.Source = new Uri(path);
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "map.html");
+            webView.Source = new Uri(path, UriKind.Absolute);
 
             // Wait for HTML to load completely
             webView.NavigationCompleted += async (s, ev) =>
@@ -67,7 +67,7 @@ namespace ISS_RealTime_Location_Map
                                 .Where(p => p.craft == "ISS")
                                 .Select(p => $"'{p.name.Replace("'", "\\'")}'")
                         );
-
+                            
                         await webView.CoreWebView2.ExecuteScriptAsync(
                             $"updateCrew([{crewNames}]);"
                         );
